@@ -2,7 +2,7 @@
 @extends('layout.app')
 
 @section('content')
-    <h1>Create Transaction</h1>
+    <h1>Data-Keluar</h1>
     <form action="{{ route('transactions.store') }}" method="POST">
         @csrf
         <div class="mb-3">

@@ -34,7 +34,7 @@
         </table>
     </div>
     <div class="container">
-        <h3>Transactions</h3>
+        <h3>Barang-Keluar</h3>
         <a href="{{ route('transactions.create') }}" class="btn btn-primary">Create Transaction</a>
         <table class="table table-bordered mt-3">
             <thead>

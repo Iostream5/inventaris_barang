@@ -2,7 +2,7 @@
 @extends('layout.app')
 
 @section('content')
-    <h1>Transactions</h1>
+    <h1>Barang-Keluar</h1>
     <a href="{{ route('transactions.create') }}" class="btn btn-primary">Create Transaction</a>
     <table class="table mt-3">
         <thead>

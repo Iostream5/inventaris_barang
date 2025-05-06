@@ -2,7 +2,7 @@
 @extends('layout.app')
 
 @section('content')
-    <h1>Edit Transaction</h1>
+    <h1>Data keluar</h1>
     <form action="{{ route('transactions.update', $transaction) }}" method="POST">
         @csrf
         @method('PUT')
