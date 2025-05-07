@@ -27,7 +27,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('category.index')->with('success', 'Category created.');
+        return redirect()->route('categories.index')->with('success', 'Category created.');
     }
 
     public function show(Category $category)
@@ -55,6 +55,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('category.index')->with('success', 'Category deleted.');
+        return redirect()->route('categories.index')->with('success', 'Category deleted.');
     }
 }

@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Barang-Keluar</h1>
-    <a href="{{ route('transactions.create') }}" class="btn btn-primary">Create Transaction</a>
+    <a href="{{ route('operasi.create') }}" class="btn btn-primary">Create Transaction</a>
     <table class="table mt-3">
         <thead>
             <tr>
@@ -24,8 +24,8 @@
                     <td>{{ $transaction->quantity }}</td>
                     <td>{{ $transaction->notes }}</td>
                     <td>
-                        <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="d-inline">
+                        <a href="{{ route('operasi.edit', $transaction) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('operasi.destroy', $transaction) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

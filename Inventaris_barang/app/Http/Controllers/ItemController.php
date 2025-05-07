@@ -28,7 +28,6 @@ class ItemController extends Controller
             'unit' => 'required',
             'category_id' => 'required|exists:categories,id',
         ]);
-
         Item::create($request->all());
         return redirect()->route('items.index')->with('success', 'Barang ditambahkan!');
     }

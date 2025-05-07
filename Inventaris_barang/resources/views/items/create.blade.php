@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
         <h3>{{ isset($item) ? 'Edit' : 'Tambah' }} Barang</h3>
-        <form action="{{ isset($item) ? route('items.update', $item->id) : route('items.store') }}" method="POST">
+        <form action="{{ isset($item) ? route('items.update', $item->id) : route('items.store') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @if (isset($item))
                 @method('PUT')
@@ -24,6 +25,15 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label>Gamber</label>
+                <input id="image" onchange="imageChange()" type="file" name="image" class="form-control"
+                    value="{{ old('stock', $item->stock ?? 0) }}">
+            </div>
+            <div class="mb-3">
+                <label>Preview</label>
+                <img id="previews" src="" type="file" name="image">
+            </div>
+            <div class="mb-3">
                 <label>Stok</label>
                 <input type="number" name="stock" class="form-control" value="{{ old('stock', $item->stock ?? 0) }}">
             </div>
@@ -38,4 +48,12 @@
             <button class="btn btn-success">Simpan</button>
         </form>
     </div>
+    <script>
+        var image = document.getElementById('image').value
+        var previews = document.getElementById('previews')
+
+        function imageChange() {
+            previews.src = image
+        }
+    </script>
 @endsection

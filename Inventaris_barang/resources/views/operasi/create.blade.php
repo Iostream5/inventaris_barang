@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Data-Keluar</h1>
-    <form action="{{ route('transactions.store') }}" method="POST">
+    <form action="{{ route('operasi.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="item_id" class="form-label">Item</label>

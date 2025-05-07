@@ -2,6 +2,38 @@
 
 @section('content')
     <div class="container">
+        <h3>Daftar User</h3>
+        <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Tambah User</a>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Hapus user ini?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
         <h3>Daftar Kategori</h3>
         <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Tambah Kategori</a>
         @if (session('success'))
@@ -26,42 +58,6 @@
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Hapus kategori?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <div class="container">
-        <h3>Barang-Keluar</h3>
-        <a href="{{ route('transactions.create') }}" class="btn btn-primary">Create Transaction</a>
-        <table class="table table-bordered mt-3">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Quantity</th>
-                    <th>Notes</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($transactions as $transaction)
-                    <tr>
-                        <td>{{ $transaction->item->name }}</td>
-                        <td>{{ $transaction->user->name }}</td>
-                        <td>{{ $transaction->type }}</td>
-                        <td>{{ $transaction->quantity }}</td>
-                        <td>{{ $transaction->notes }}</td>
-                        <td>
-                            <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('transactions.destroy', $transaction) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -98,6 +94,41 @@
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Hapus barang ini?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h3>Barang-Keluar</h3>
+        <a href="{{ route('operasi.create') }}" class="btn btn-primary">Create Transaction</a>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($transactions as $transaction)
+                    <tr>
+                        <td>{{ $transaction->item->name }}</td>
+                        <td>{{ $transaction->user->name }}</td>
+                        <td>{{ $transaction->type }}</td>
+                        <td>{{ $transaction->quantity }}</td>
+                        <td>{{ $transaction->notes }}</td>
+                        <td>
+                            <a href="{{ route('operasi.edit', $transaction) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('operasi.destroy', $transaction) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
