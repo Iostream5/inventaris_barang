@@ -49,16 +49,16 @@
         const emailInput = categoryModal.querySelector('input[name="email"]');
 
         if (userId) {
-            modalTitle.textContent = `Edit User: ${userName}`;
-            form.action = `/users/${userId}`;
+            modalTitle.textContent = `Edit Category: ${userName}`;
+            form.action = `/categories/${userId}`;
             form.method = 'POST';
             let inputMethod = document.createElement('input');
             inputMethod.setAttribute('name', '_method');
             inputMethod.setAttribute('value', 'PUT');
             form.appendChild(inputMethod);
         } else {
-            modalTitle.textContent = 'Tambah User';
-            form.action = '/users';
+            modalTitle.textContent = 'Tambah Category';
+            form.action = '/categories';
             form.method = 'POST';
             let existingMethod = form.querySelector('[name="_method"]');
             if (existingMethod) {
