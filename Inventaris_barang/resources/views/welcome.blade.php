@@ -1,12 +1,15 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="container">
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    <div class="container my-3">
         <h3>Daftar User</h3>
-        <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Tambah User</a>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userModal">
+            {{ isset($user) ? 'Edit User' : 'Tambah User' }}
+        </button>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -21,7 +24,11 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#userModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                data-email="{{ $user->email }}">
+                                Edit
+                            </button>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
@@ -30,15 +37,15 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
-    <div class="container">
+    <div class="container my-3">
         <h3>Daftar Kategori</h3>
-        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Tambah Kategori</a>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            {{ isset($category) ? 'Edit' : 'Tambah' }} Kategori
+        </button>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -48,13 +55,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $cat)
+                @foreach ($categories as $category)
                     <tr>
-                        <td>{{ $cat->name }}</td>
-                        <td>{{ $cat->description }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->description }}</td>
                         <td>
-                            <a href="{{ route('categories.edit', $cat->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('categories.destroy', $cat->id) }}" method="POST" class="d-inline">
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#categoryModal" data-id="{{ $category->id }}"
+                                data-name="{{ $category->name }}" data-description="{{ $category->description }}">
+                                Edit
+                            </button>
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                class="d-inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Hapus kategori?')">Hapus</button>
@@ -62,15 +74,16 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
-    <div class="container">
+    <div class="container my-3">
         <h3>Daftar Barang</h3>
-        <a href="{{ route('items.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#itemModal">
+            {{ isset($item) ? 'Edit' : 'Tambah' }} Barang
+        </button>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -89,7 +102,12 @@
                         <td>{{ $item->stock }}</td>
                         <td>{{ $item->unit }}</td>
                         <td>
-                            <a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#itemModal" data-id="{{ $item->id }}" data-name="{{ $item->name }}"
+                                data-category="{{ $item->category->id }}" data-stock="{{ $item->stock }}"
+                                data-unit="{{ $item->unit }}">
+                                Edit
+                            </button>
                             <form action="{{ route('items.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
@@ -98,12 +116,15 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
-    <div class="container">
+    <div class="container my-3">
         <h3>Barang-Keluar</h3>
-        <a href="{{ route('operasi.create') }}" class="btn btn-primary">Create Transaction</a>
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#transactionModal">
+            Tambah Transaksi
+        </button>
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
@@ -124,8 +145,15 @@
                         <td>{{ $transaction->quantity }}</td>
                         <td>{{ $transaction->notes }}</td>
                         <td>
-                            <a href="{{ route('operasi.edit', $transaction) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('operasi.destroy', $transaction) }}" method="POST" class="d-inline">
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#transactionModal" data-id="{{ $transaction->id }}"
+                                data-item="{{ $transaction->item->id }}" data-user="{{ $transaction->user->id }}"
+                                data-type="{{ $transaction->type }}" data-quantity="{{ $transaction->quantity }}"
+                                data-notes="{{ $transaction->notes }}">
+                                Edit
+                            </button>
+                            <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST"
+                                class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -133,7 +161,15 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
+
+    @include('category.create')
+    @include('users.create')
+    @include('items.create')
+    @include('transaction.create')
+
+    <script></script>
 @endsection

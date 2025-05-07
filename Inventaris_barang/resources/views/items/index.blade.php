@@ -1,12 +1,12 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="container">
+    <div class="container my-3">
         <h3>Daftar Barang</h3>
-        <a href="{{ route('items.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#itemModal">
+            {{ isset($item) ? 'Edit' : 'Tambah' }} Barang
+        </button>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -25,7 +25,12 @@
                         <td>{{ $item->stock }}</td>
                         <td>{{ $item->unit }}</td>
                         <td>
-                            <a href="{{ route('items.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#itemModal" data-id="{{ $item->id }}" data-name="{{ $item->name }}"
+                                data-category="{{ $item->category->id }}" data-stock="{{ $item->stock }}"
+                                data-unit="{{ $item->unit }}">
+                                Edit
+                            </button>
                             <form action="{{ route('items.destroy', $item->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
@@ -34,7 +39,9 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
+    @include('items.create')
 @endsection

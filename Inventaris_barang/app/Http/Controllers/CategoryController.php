@@ -10,7 +10,10 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('category.index', compact('categories'));
+        return view('category.index',
+        ['title'=> 'Categori',
+        'categories' => $categories
+        ]);
     }
 
     public function create()
@@ -27,7 +30,7 @@ class CategoryController extends Controller
 
         Category::create($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Category created.');
+        return redirect()->route('dashboard');
     }
 
     public function show(Category $category)
@@ -49,12 +52,12 @@ class CategoryController extends Controller
 
         $category->update($request->all());
 
-        return redirect()->route('category.index')->with('success', 'Category updated.');
+        return redirect()->route('dashboard')->with('success', 'Category updated.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted.');
+        return redirect()->route('dashboard')->with('success', 'Category deleted.');
     }
 }

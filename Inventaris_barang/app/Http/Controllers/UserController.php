@@ -11,7 +11,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
-        return view('users.index', compact('users'));
+        return view('users.index',[
+            'title'=>'User',
+            'users'=>$users
+        ]);
     }
 
     public function create()
@@ -33,7 +36,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User ditambahkan!');
+        return redirect()->route('dashboard');
     }
 
     public function edit(User $user)
@@ -55,12 +58,12 @@ class UserController extends Controller
         }
 
         $user->update($data);
-        return redirect()->route('users.index')->with('success', 'User diperbarui!');
+        return redirect()->route('dashboard')->with('success', 'User diperbarui!');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User dihapus!');
+        return redirect()->route('dashboard')->with('success', 'User dihapus!');
     }
 }

@@ -11,7 +11,10 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::with('category')->latest()->get();
-        return view('items.index', compact('items'));
+        return view('items.index',[
+            'title'=>'Barang',
+            'items'=>$items
+        ]);
     }
 
     public function create()
@@ -29,7 +32,7 @@ class ItemController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
         Item::create($request->all());
-        return redirect()->route('items.index')->with('success', 'Barang ditambahkan!');
+        return redirect()->route('dashboard');
     }
 
     public function edit(Item $item)
@@ -48,12 +51,12 @@ class ItemController extends Controller
         ]);
 
         $item->update($request->all());
-        return redirect()->route('items.index')->with('success', 'Barang diperbarui!');
+        return redirect()->route('dashboard')->with('success', 'Barang diperbarui!');
     }
 
     public function destroy(Item $item)
     {
         $item->delete();
-        return redirect()->route('items.index')->with('success', 'Barang dihapus!');
+        return redirect()->route('dashboard')->with('success', 'Barang dihapus!');
     }
 }

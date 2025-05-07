@@ -1,12 +1,12 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="container">
+    <div class="container my-3">
         <h3>Daftar User</h3>
-        <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Tambah User</a>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#userModal">
+            {{ isset($user) ? 'Edit User' : 'Tambah User' }}
+        </button>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -21,7 +21,11 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#userModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                data-email="{{ $user->email }}">
+                                Edit
+                            </button>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-danger btn-sm"
@@ -30,7 +34,9 @@
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>
+    @include('users.create')
 @endsection

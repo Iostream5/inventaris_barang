@@ -11,5 +11,5 @@ Route::get('/', [dashboard::class, 'index'])->name('dashboard');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('items', ItemController::class);
-Route::resource('operasi', TransactionController::class);
+Route::resource('transactions', TransactionController::class);
 Route::resource('users', UserController::class);
